@@ -1,77 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import * as ItemActions from '../redux/actions'
 
 // Composants
+import AddProduct from './AddProduct';
+import ProductContainer from './ProductContainer';
+import Recap from './Recap';
+import ShopshopHeader from './ShopshopHeader';
 import ShopshopFooter from './ShopshopFooter';
 
-// TODO : A découper en composants et dynamiser
-const App = ({nbItemsRange}) => (
+
+const App = ({nbItemsRange, items, actions}) => (
     <React.Fragment>
         <div className="container">
-            <h1 className="mainTitle">ShopShop</h1>
-            <div className="whiteBox">   
-                <div className="whiteBox__section">
-                    <form className="addItem" >
-                        <select value="1" readOnly="true" className="addItem__selectNbItems">
-                            {nbItemsRange.map(i => <option key={i} value={i}>{i}</option>)}
-                        </select>
-                        <input type="text" className="addItem__inputText" placeholder="Ajouter un article"/>
-                        <button className="addItem__addbutton"/>
-                    </form>
-                </div>
-                <div className="whiteBox__section">
-                    <div className='item'>
-                        <input
-                            id='item_1'
-                            type='checkbox'
-                            className='item__check'>
-                        </input>
-                        <label for='item_1' class='item__description'>
-                            <span className='item__nbItem'>2</span>
-                            <span className='item__label'>Sabre Laser</span>
-                        </label>
-                        <button className='item__delete'/>
-                    </div>
-                    <div className='item item--checked'>
-                        <input
-                            id='item_2'
-                            type='checkbox'
-                            className='item__check'
-                            checked>
-                        </input>
-                        <label for='item_2' class='item__description'>
-                            <span className='item__nbItem'>1</span>
-                            <span className='item__label'>Pack d'IPA Citra</span>
-                        </label>
-                        <button className='item__delete'/>
-                    </div>
-                    <div className='item'>
-                        <input
-                            id='item_3'
-                            type='checkbox'
-                            className='item__check'>
-                        </input>
-                        <label for='item_3' class='item__description'>
-                            <span className='item__nbItem'>1</span>
-                            <span className='item__label'>Livre "Introducing Eventstorming" par Alberto Brandolini</span>
-                        </label>
-                        <button className='item__delete'/>
-                    </div>
-                </div>
-                <div className="whiteBox__section">
-                    <small>Encore 3 articles à récupérer.</small>
-                </div>
+            <ShopshopHeader/>
+            <div className="whiteBox">
+              <AddProduct nbItemsRange={nbItemsRange} addItem={actions.addItem}/>
+              <ProductContainer />
+              <Recap items={items}/>
             </div>
         </div>
         <ShopshopFooter/>
     </React.Fragment>
 );
 
+
 const mapStateToProps = state => ({
-    nbItemsRange: state.nbItemsRange,
+  nbItemsRange: state.nbItemsRange,
+  items: state.items
 });
 
 const mapDispatchToProps = dispatch => ({
+  actions : bindActionCreators(ItemActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
