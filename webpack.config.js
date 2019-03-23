@@ -30,6 +30,17 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+      modules: [ "src", "node_modules"],
+      alias: {
+        assets: path.resolve(__dirname, 'src/assets'),
+        components: path.resolve(__dirname, 'src/components'),
+        containers: path.resolve(__dirname, 'src/containers'),
+        features: path.resolve(__dirname, 'src/features'),
+        store: path.resolve(__dirname, 'src/store'),
+      },
+       extensions: ['.js', '.json']
+    },
     plugins: [
         // Génère le fichier index.html
         new HtmlWebpackPlugin({

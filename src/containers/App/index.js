@@ -2,38 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import * as ItemActions from '../redux/actions'
+import { productsActions } from 'features/products'
 
-// Composants
-import AddProduct from './AddProduct';
-import ProductContainer from './ProductContainer';
-import Recap from './Recap';
-import ShopshopHeader from './ShopshopHeader';
-import ShopshopFooter from './ShopshopFooter';
+// composants
+import { AddProduct, Recap, Header, Footer } from 'components';
+// containers
+import { ProductsList } from 'containers';
 
 
 const App = ({nbItemsRange, items, actions}) => (
     <React.Fragment>
         <div className="container">
-            <ShopshopHeader/>
+            <Header/>
             <div className="whiteBox">
               <AddProduct nbItemsRange={nbItemsRange} addItem={actions.addItem}/>
-              <ProductContainer />
+              <ProductsList />
               <Recap items={items}/>
             </div>
         </div>
-        <ShopshopFooter/>
+        <Footer/>
     </React.Fragment>
 );
 
 
 const mapStateToProps = state => ({
-  nbItemsRange: state.nbItemsRange,
-  items: state.items
+  nbItemsRange: state.productsState.nbItemsRange,
+  items: state.productsState.items
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions : bindActionCreators(ItemActions, dispatch)
+  actions : bindActionCreators(productsActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

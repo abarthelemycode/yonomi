@@ -1,8 +1,4 @@
-import {
-    ADD_ITEM,
-    DELETE_ITEM,
-    TOGGLE_ITEM
-} from './actions';
+import { default as types } from "./types";
 
 const initialState = {
     // Valeur possible pour le nombre d'items (de 1 à 10)
@@ -10,10 +6,10 @@ const initialState = {
     items : []
 };
 
-export default (state = initialState, action) => {
+const productsReducer = (state = initialState, action) => {
 
   switch (action.type) {
-     case ADD_ITEM:
+     case types.ADD_ITEM:
        return Object.assign({}, state, {
           items: [
             ...state.items,
@@ -25,12 +21,12 @@ export default (state = initialState, action) => {
             }
           ]
         })
-     case DELETE_ITEM:
+     case types.DELETE_ITEM:
        return Object.assign({}, state, {
           items: state.items.filter(item => item.id !== action.item.id )
       })
 
-     case TOGGLE_ITEM:
+     case types.TOGGLE_ITEM:
        return Object.assign({}, state, {
          items: state.items.map((item) => {
            if (item.id === action.item.id) {
@@ -44,3 +40,5 @@ export default (state = initialState, action) => {
        return state
    }
 }
+
+export default productsReducer

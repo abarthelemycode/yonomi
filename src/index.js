@@ -1,20 +1,17 @@
-import  'normalize.css';
-import './styles/page.scss';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-import reducer from './redux/reducer';
-import App from './components/App';
+import store  from 'store';
+import { App } from 'containers';
 
-const store = createStore(reducer);
+// import css
+import  'normalize.css';
+import './assets/styles/index.scss';
 
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={store()}>
         <App />
     </Provider>,
     document.getElementById('app')
 )
-
